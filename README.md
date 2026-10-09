@@ -8,6 +8,16 @@ A point-to-point radio link between two software-defined radios (ADALM-Pluto or 
 | `FILE_TEXT_SDR_TXRX.py` | Chat plus **image/file transfer** with CRC-32 checks and NACK-based selective retransmission |
 | `STREAM_FILE_TEXT_SDR_TXRX.py` | One-way **live video streaming**: frames are JPEG-compressed, chunked, sent over the air, and reassembled in a viewer window |
 
+## Product perspective
+
+This project was delivered as three increments, each a usable product, with each design decision tied to a measurable constraint:
+
+- **Incremental delivery:** text chat → reliable file transfer → live video. Each release met a stricter requirement: *works* → *arrives intact* → *arrives on time*.
+- **Data-driven trade-offs:** airtime budgets set the video settings and justified a new packet format that carries about **1.9× more data per transmission**.
+- **Quality without hardware:** an automated loopback test suite validates every protocol against simulated radio impairments and has already surfaced a real defect.
+
+📄 **[Read the full product case study](docs/case-study.md)**: problem framing, trade-off decisions, capacity planning, risks and a prioritized roadmap.
+
 ## How it works
 
 ```text
@@ -30,7 +40,7 @@ RX:  Pluto RX -> shift IF back to baseband -> correlate with Barker-13 (frame sy
 - 2 × ADALM-Pluto (or a Pluto-compatible SDR), each reachable over the network. The defaults assume `192.168.1.10` and `192.168.1.11`.
 - Antennas, or for bench testing **SMA cables with 30–40 dB attenuators** between the radios.
 
-> ⚠️ **RF regulations:** the default carrier is **5.000 GHz**. Transmitting over the air on any frequency may require a licence where you are. For bench tests use cabled connections with attenuators, or change `FREQ` to a band you're allowed to use.
+> ⚠️ **RF regulations:** the default carrier is **5.000 GHz**. Over-the-air transmission needs the right authorization; in Canada spectrum is regulated by ISED, and similar rules apply elsewhere. This project is meant for **cabled bench testing with attenuators**. To transmit over the air, change `FREQ` to a band you're authorized to use.
 
 ## Setup
 
